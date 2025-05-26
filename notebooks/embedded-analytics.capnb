@@ -1,0 +1,207 @@
+[
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "cf-cleanup space",
+        "outputs": []
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Go to project root",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "cd ..",
+        "outputs": [
+            {
+                "mime": "text/plain",
+                "value": "\n"
+            }
+        ]
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Build and deploy only approuter",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "mbt module-build -g -m sflight\n\n ",
+        "outputs": [
+            {
+                "mime": "text/plain",
+                "value": "[2025-05-20 15:43:16]  INFO building the \"sflight\" module...\n[2025-05-20 15:43:16]  INFO executing the \"npm install --production\" command...\nnpm WARN config production Use `--omit=dev` instead.\n....\nadded 228 packages, and audited 230 packages in 4s\n\nfound 0 vulnerabilities\n[2025-05-20 15:43:20]  INFO the build results of the \"sflight\" module will be packaged and saved in the \"/home/rjegl/github/cap-sflight/.cap-sflight_mta_build_tmp/sflight\" folder\n[2025-05-20 15:43:20]  INFO finished building the \"sflight\" module\n[2025-05-20 15:43:20]  INFO generating the \"/home/rjegl/github/cap-sflight/mtad.yaml\" file...\n\n"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "cf deploy -m sflight",
+        "outputs": [
+            {
+                "mime": "text/plain",
+                "value": "Deploying multi-target app archive /home/rjegl/github/cap-sflight/capire.sflight.mtar in org 8a772b25trial / space dev as rene.jeglinsky@sap.com...\n\nUploading 1 files...\n  /home/rjegl/github/cap-sflight/capire.sflight.mtar\nOK\nOperation ID: 6b72d8de-3580-11f0-850c-eeee0a82bd89\nDeploying in org \"8a772b25trial\" and space \"dev\"\nDetected MTA schema version: \"3\"\nDetected deployed MTA with ID \"capire.sflight\" and version \"1.0.0\"\nDetected new MTA version: \"1.0.0\"\nDeployed MTA version: \"1.0.0\"\nMTA module \"sflight-srv\" is found deployed, but it is not part of MTA manifest file\nMTA module \"sflight-db-deployer\" is found deployed, but it is not part of MTA manifest file\nProcessing service \"sflight-auth\"...\nSetting service \"sflight-auth\" parameters from \"sflight-auth/xs-security.json\"\nProcessing service \"sflight-db\"...\nUpdating service \"sflight-auth\"...\n1 of 1 done\nUpdating application \"sflight\"...\nApplication \"sflight\" attributes are not modified and will not be updated\nUnbinding service instance \"sflight-auth\" from application \"sflight\"...\nBinding service instance \"sflight-auth\" to application \"sflight\"...\nUploading application \"sflight\"...\nContent of application \"sflight\" is not changed - upload will be skipped.\nStopping application \"sflight\"...\nStarting application \"sflight\"...\nApplication \"sflight\" started and available at \"8a772b25trial-dev-sflight.cfapps.us10-001.hana.ondemand.com\"\nSkipping deletion of services, because the command line option \"--delete-services\" is not specified.\nProcess finished.\nUse \"cf dmol -i 6b72d8de-3580-11f0-850c-eeee0a82bd89\" to download the logs of the process.\n\n"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "rm -rf app/.karma",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "%%writefile \".npmrc\"\n@sap:registry=https://int.repositories.cloud.sap/artifactory/api/npm/build-releases-npm/\nregistry=https://int.repositories.cloud.sap/artifactory/api/npm/build-releases-npm/",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "npm config list @sap:registry",
+        "outputs": [
+            {
+                "mime": "text/plain",
+                "value": "; \"project\" config from /home/rjegl/github/cap-sflight/.npmrc\n\n@sap:registry = \"https://int.repositories.cloud.sap/artifactory/api/npm/build-milestones-npm/\" \nregistry = \"https://int.repositories.cloud.sap/artifactory/api/npm/build-milestones-npm/\" \n\n; node bin location = /home/rjegl/.nvm/versions/node/v20.11.0/bin/node\n; node version = v20.11.0\n; npm local prefix = /home/rjegl/github/cap-sflight\n; npm version = 10.2.4\n; cwd = /home/rjegl/github/cap-sflight/notebooks\n; HOME = /home/rjegl\n; Run `npm config ls -l` to show all defaults.\n\n"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "npm add @sap/cds-ea-plugin@0.0.29",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks6</b>"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "%%writefile \".npmrc\"\n@sap:registry=https://int.repositories.cloud.sap/artifactory/api/npm/build-milestones-npm/\nregistry=https://int.repositories.cloud.sap/artifactory/api/npm/build-milestones-npm/",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Wrote cell content to file <a href=\".npmrc\">.npmrc</a>.\n"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "npm add @sap/cds-adapter-ina-js",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks8</b>"
+            }
+        ]
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Declare an analytical service",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "%%writefile \"srv/embedded-analytics.cds\"\nusing { sap.fe.cap.travel as my } from '../db/schema';\n\n\n@protocol: 'ina'\nservice FlightService {\n\nannotate my.Airline with @ObjectModel.modelingPattern: #ANALYTICAL_DIMENSION\n                         @ObjectModel.supportedCapabilities: [#ANALYTICAL_DIMENSION];\nentity FlightByAirport as select from my.Flight {\n  // dimension fields:\n  @ObjectModel.foreignKey.association: to_Airline\n  AirlineID,\n  to_Airline, \n  FlightDate,\n  ConnectionID,\n  CurrencyCode,\n\n  // measures:\n  @AnalyticsDetails.measureType: #BASE\n  Price,\n  @AnalyticsDetails.measureType: #BASE\n  MaximumSeats,\n  @AnalyticsDetails.measureType: #BASE\n  @Aggregation.default: #SUM\n  OccupiedSeats * Price as Profit : Decimal \n};\n};",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "cds add hana,mta,xsuaa,approuter --for production",
+        "outputs": []
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Freeze dependencies",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "npm update --package-lock-only\nnpm i --prefix app/travel_analytics\nnpm i --prefix app/travel_processor",
+        "outputs": []
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Workaround (at least needed for trial):",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "%%extendjson \"xs-security.json\"\n{\"oauth2-configuration\": {\n    \"redirect-uris\": [\"https://*.us10-001.hana.ondemand.com/**\"]\n}}",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "shell",
+        "value": "%%extendjson \"app/router/xs-app.json\"\n{\"routes\": [           \n        {\n            \"source\": \"^/sap/bc/ina/service/v2/(.*)$\",\n            \"destination\": \"srv-api\",\n            \"authenticationType\": \"xsuaa\"\n        }\n     ]\n     }",
+        "outputs": []
+    },
+    {
+        "kind": 1,
+        "language": "markdown",
+        "value": "Enhance the approuter module in the  mta.yaml file according to this document:\nhttps://github.tools.sap/cap/golden-path/blob/main/deploy/with-sac/to-cf.md#build-and-deploy",
+        "outputs": []
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "cf login -a api.cf.us10-001.hana.ondemand.com --sso",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks18</b>"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "cf login -a api.cf.sap.hana.ondemand.com --sso",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks17</b>"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "mbt build -t gen --mtar mta.tar",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks23</b>"
+            }
+        ]
+    },
+    {
+        "kind": 2,
+        "language": "terminal",
+        "value": "cf deploy gen/mta.tar",
+        "outputs": [
+            {
+                "mime": "text/html",
+                "value": "Running in terminal <b>embedded-analytics.capnb - /home/rjegl/github/cap-sflight/notebooks21</b>"
+            }
+        ]
+    }
+]

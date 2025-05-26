@@ -1,0 +1,77 @@
+_schema-version: 3.3.0
+ID: capire.sflight
+description: CAP flight demo scenario
+version: 1.0.0
+modules:
+- name: sflight-srv
+  type: javascript.nodejs
+  path: sflight-srv
+  requires:
+  - name: sflight-auth
+  - name: sflight-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+- name: sflight
+  type: javascript.nodejs
+  path: .cap-sflight_mta_build_tmp/sflight/data.zip
+  properties:
+    COOKIES: '{"SameSite": "None"}'
+    CORS: '[{"uriPattern": "^/sap/bc/ina/(.*)$", "allowedOrigin": [{"host":"cap-embedded-test.eu10.analytics.cloud.sap",  "protocol":"https"}],
+      "allowedMethods": ["GET", "POST", "OPTIONS"], "allowedHeaders": ["Origin", "Accept",
+      "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers",
+      "Authorization", "X-Sap-Cid", "X-Csrf-Token", "application-id"], "exposeHeaders":
+      ["Accept", "Authorization", "X-Requested-With", "X-Sap-Cid", "Access-Control-Allow-Origin",
+      "Access-Control-Allow-Credentials", "X-Csrf-Token", "Content-Type"]}]'
+    SESSION_TIMEOUT: 120
+  requires:
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      url: ~{srv-url}
+  - name: sflight-auth
+  provides:
+  - name: app-api
+    properties:
+      app-protocol: ${protocol}
+      app-uri: ${default-uri}
+  parameters:
+    disk-quota: 256M
+    keep-existing-routes: true
+    memory: 256M
+- name: sflight-db-deployer
+  type: com.sap.xs.hdi
+  path: sflight-db-deployer
+  requires:
+  - name: sflight-db
+  parameters:
+    buildpack: nodejs_buildpack
+resources:
+- name: sflight-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: sflight-${org}-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: sflight-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

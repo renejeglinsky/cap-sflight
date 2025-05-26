@@ -20,14 +20,17 @@
   "dependencies": {
     "@cap-js/hana": "^1",
     "@sap/cds": ">=8.4.0",
+    "@sap/cds-adapter-ina-js": "^1.1.3",
     "@sap/xssec": "^4",
     "express": "^4"
   },
   "devDependencies": {
     "@cap-js/cds-test": "^0",
+    "@sap/cds-ea-plugin": "^0.0.29",
     "@cap-js/cds-typer": "^0",
     "@cap-js/cds-types": "^0",
     "@cap-js/sqlite": "^1.0.1",
+    "@sap/cds-dk": "^8",
     "@sap/ux-specification": "UI5-1.128",
     "@types/jest": "^29.5.13",
     "cds-plugin-ui5": "^0.12.0",
@@ -43,6 +46,12 @@
   "cds": {
     "cdsc": {
       "newParser": true
+    },
+    "features": {
+      "fiori_preview": true
+    },
+    "server": {
+      "index": true
     },
     "requires": {
       "db": {
